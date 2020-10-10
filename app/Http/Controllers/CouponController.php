@@ -52,6 +52,7 @@ class CouponController extends Controller
                 'expires_at' => $request->expires_at,
                 'discount_rate' => $request->discount_rate,
                 'greater_than' => $request->greater_than,
+                'generated_codes' => $request->total_codes,
             ]);
 
             //create an empty array
@@ -153,8 +154,8 @@ class CouponController extends Controller
         return [
             'id' => $model->id,
             'name' => $model->name,
-            'total_codes' => $model->codes->count(),
-            'used_codes' => $model->codes->count(),
+            'total_codes' => $model->generated_codes,
+            'used_codes' => $model->used_codes,
             'discount_rate' => $model->discount_rate,
             'greater_than' => $model->greater_than,
             'expires_at' => $model->expires_at,

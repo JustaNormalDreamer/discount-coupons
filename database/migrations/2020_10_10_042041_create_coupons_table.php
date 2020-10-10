@@ -18,6 +18,8 @@ class CreateCouponsTable extends Migration
             $table->string('name', 255);
             $table->unsignedInteger('discount_rate')->default(10);
             $table->unsignedBigInteger('greater_than')->default(1000);
+            $table->unsignedInteger('generated_codes');
+            $table->unsignedInteger('used_codes')->default(0);
             $table->datetime('expires_at');
             $table->timestamps();
         });
