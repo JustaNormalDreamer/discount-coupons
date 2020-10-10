@@ -15,6 +15,7 @@ class Coupon extends Model
 
      protected $casts = [
          'expires_at' => 'datetime',
+         'used_codes' => 'integer'
      ];
 
     public function codes()
@@ -22,8 +23,20 @@ class Coupon extends Model
         return $this->hasMany(Code::class);
     }
 
-    public function is_valid() :bool
+    public function is_valid(bool $codeStatus) :bool
     {
-        return $this->status === false && $this->expires_at > now();
+        //if the status is false and the expires_at column is greater than current time
+        // return true i.e. valid else invalid or expired
+        return $codeStatus === false && $this->expires_at > now();
+    }
+
+    public function is_expired() :bool
+    {
+        return $this->expires_at > now();
+    }
+
+    public function is_greater_than($product_rate) :bool
+    {
+        return $product_rate >= $this->greater_than;
     }
 }

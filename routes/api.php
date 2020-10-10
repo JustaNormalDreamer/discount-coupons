@@ -24,3 +24,7 @@ Route::get('coupons', 'CouponController@index')->name('coupons.index');
 Route::post('coupons', 'CouponController@store')->name('coupons.store');
 
 Route::get('coupons/{coupon}', 'CouponController@show')->name('coupons.show');
+
+Route::get('users/{user}', 'UserController@index')->name('users.index');
+
+Route::post('users/{user}/{product}', 'ClaimCouponController@index')->name('coupon.claim');
