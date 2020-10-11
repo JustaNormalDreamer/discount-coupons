@@ -46,21 +46,33 @@ class ClaimCouponController extends Controller
                             'used_codes' => $coupon->used_codes + 1
                         ]);
 
-                        return "The coupon has been claimed successfully.";
+                        return [
+                            'message' => "The coupon has been claimed successfully.",
+                            'status' => 200
+                        ];
                     }
                     else {
-                        return "The coupon should be applied to products greater than {$coupon->greater_than}.";
+                        return [
+                            'message' => "The coupon should be applied to products greater than {$coupon->greater_than}.",
+                            'status' => 406
+                        ];
                     }
                 } else {
-                    return "The coupon has expired.";
+                    return [
+                        'message' => "The coupon has expired.",
+                        'status' => 419
+                    ];
                 }
             } else {
-                return "The coupon has been claimed.";
+                return [
+                    'message' => "The coupon has been claimed.",
+                    'status' => 409
+                ];
             }
         });
 
         return response()->json([
-            'data' => $message
-        ], 201);
+            'data' => $message['message']
+        ], $message['status']);
     }
 }
