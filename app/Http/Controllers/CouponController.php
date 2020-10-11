@@ -74,7 +74,7 @@ class CouponController extends Controller
 
         return response()->json([
             'status' => 'ok'
-        ], 200);
+        ], 201);
     }
 
     /**

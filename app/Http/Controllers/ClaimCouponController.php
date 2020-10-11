@@ -61,6 +61,6 @@ class ClaimCouponController extends Controller
 
         return response()->json([
             'data' => $message
-        ], 200);
+        ], 201);
     }
 }

@@ -27,7 +27,7 @@ class CouponRequest extends FormRequest
             'name' => 'required|string|max:255',
             'total_codes' => 'required|numeric|min:1',
             'expires_at' => 'required|date',
-            'discount_rate' => 'required|digits_between:1,100',
+            'discount_rate' => 'required|numeric|between:1,100',
             'greater_than' => 'required|numeric',
         ];
     }
