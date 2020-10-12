@@ -46,8 +46,14 @@ class ClaimCouponController extends Controller
                             'used_codes' => $coupon->used_codes + 1
                         ]);
 
+                        //calculating the amount
+                        $discountAmt = ($chose_product->rate * $coupon->discount_rate)/100;
+                        $newAmt = $chose_product->rate - $discountAmt;
+
                         return [
                             'message' => "The coupon has been claimed successfully.",
+                            'discount_amount' => $discountAmt,
+                            'new_amount' => $newAmt,
                             'status' => 200
                         ];
                     }
@@ -72,7 +78,9 @@ class ClaimCouponController extends Controller
         });
 
         return response()->json([
-            'data' => $message['message']
+            'data' => $message['message'],
+            'discount_amount' => array_key_exists('discount_amount', $message) ? $message['discount_amount'] : '',
+            'new_amount' => array_key_exists('new_amount', $message) ? $message['new_amount'] : '0',
         ], $message['status']);
     }
 }
