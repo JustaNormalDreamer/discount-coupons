@@ -4,9 +4,12 @@ import { Provider } from 'react-redux'
 import store from './store'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
+import Navbar from "./components/layouts/Navbar";
 import Coupon from "./components/Coupons";
 import CreateCoupon from "./components/Coupons/create";
-import Navbar from "./components/layouts/Navbar";
+import Products from "./components/Products";
+import CreateProduct from "./components/Products/create";
+
 
 const App = () => {
     return (
@@ -16,6 +19,9 @@ const App = () => {
                     <Navbar />
                     <Route exact path="/" component={Coupon} />
                     <Route exact path="/coupons/create" component={CreateCoupon} />
+
+                    <Route exact path="/products" component={Products} />
+                    <Route exact path="/products/create" component={CreateProduct} />
                     <Switch>
 
                     </Switch>

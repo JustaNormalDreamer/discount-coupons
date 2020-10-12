@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CouponResourceCollection;
 use App\Models\Coupon;
 use App\Models\Code;
 use Illuminate\Http\Request;
@@ -18,13 +19,9 @@ class CouponController extends Controller
      */
     public function index()
     {
-        $coupons = Coupon::with('codes')->get();
+        $coupons = Coupon::with('codes')->latest()->paginate(10);
 
-        return response()->json([
-            'data' => $coupons->map(function($coupon) {
-                return $this->formatCouponData($coupon);
-            })
-        ]);
+        return new CouponResourceCollection($coupons);
     }
 
     /**
@@ -115,11 +112,17 @@ class CouponController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Coupon  $coupon
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
     public function destroy(Coupon $coupon)
     {
-        //
+        //deleting both codes and the coupon
+        DB::transaction(function() use ($coupon) {
+            $coupon->delete();
+            $coupon->codes()->delete();
+        });
+
+        return response(null, 204);
     }
 
     /**
@@ -143,33 +146,5 @@ class CouponController extends Controller
     private function codeExists(string $code) :bool
     {
         return Code::where('code', $code)->count() > 0;
-    }
-
-    /**
-     * @param $model
-     * @return array
-     */
-    private function formatCouponData($model)
-    {
-        return [
-            'id' => $model->id,
-            'name' => $model->name,
-            'total_codes' => $model->generated_codes,
-            'used_codes' => $model->used_codes,
-            'discount_rate' => $model->discount_rate,
-            'greater_than' => $model->greater_than,
-            'expires_at' => $model->expires_at,
-            'created_at' => $model->created_at,
-            'updated_at' => $model->updated_at,
-            'codes' => $model->codes->map(function($code) {
-                return [
-                    'id' => $code->id,
-                    'code' => $code->code,
-                    'status' => $code->status,
-                    'created_at' => $code->created_at,
-                    'updated_at' => $code->updated_at,
-                ];
-            })
-        ];
     }
 }

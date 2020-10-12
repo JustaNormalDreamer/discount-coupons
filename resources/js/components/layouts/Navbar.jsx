@@ -18,6 +18,16 @@ const Navbar = () => {
                                 Create Coupons
                             </NavLink>
                         </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/products">
+                                Products
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/products/create">
+                                Create Product
+                            </NavLink>
+                        </li>
                     </ul>
                 </div>
             </div>

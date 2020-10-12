@@ -1,4 +1,4 @@
-import { GET_COUPONS, GET_COUPON, COUPON_LOADING } from "../types/couponsTypes";
+import { GET_COUPONS, GET_COUPON, COUPON_LOADING, DELETE_COUPON } from "../types/couponsTypes";
 
 const initialState = {
     coupons: [],
@@ -26,6 +26,12 @@ export default function(state=initialState, action) {
             return {
                 ...state,
                 loading: true,
+            }
+
+        case DELETE_COUPON:
+            return {
+                ...state,
+                coupons: state.coupons.filter(coupon => coupon.id !== action.payload)
             }
 
         default:

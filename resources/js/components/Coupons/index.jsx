@@ -1,14 +1,18 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux'
 import propTypes from 'prop-types'
-import { getCoupons } from "../../actions/couponActions";
+import { getCoupons, deleteCoupon } from "../../actions/couponActions";
 
 import Spinner from '../Spinner';
 
-const Coupon = ({ getCoupons, coupons: { coupons, loading } }) => {
+const Coupon = ({ getCoupons, deleteCoupon, coupons: { coupons, loading } }) => {
     useEffect(() => {
         getCoupons();
     }, [getCoupons]);
+
+    const deleteHandler = couponId => {
+        deleteCoupon(couponId);
+    }
 
     let couponItems;
     if(coupons === null || loading) {
@@ -24,6 +28,7 @@ const Coupon = ({ getCoupons, coupons: { coupons, loading } }) => {
                     <td>{coupon.total_codes}</td>
                     <td>{coupon.used_codes}</td>
                     <td>{coupon.expires_at}</td>
+                    <td><button className="btn btn-danger" onClick={() => deleteHandler(coupon.id)}>Delete</button></td>
                 </tr>
             ))
         }
@@ -36,22 +41,25 @@ const Coupon = ({ getCoupons, coupons: { coupons, loading } }) => {
                     <h3 className="">Manage Coupons</h3>
                 </div>
                 <div className="card-body">
-                    <table className="table table-responsive table-bordered table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Discount Rate</th>
-                                <th>Price Range</th>
-                                <th>Generated</th>
-                                <th>Used</th>
-                                <th>Expires At</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {couponItems}
-                        </tbody>
-                    </table>
+                    <div className="table-responsive">
+                        <table className="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Discount Rate</th>
+                                    <th>Price Range</th>
+                                    <th>Generated</th>
+                                    <th>Used</th>
+                                    <th>Expires At</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {couponItems}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -60,6 +68,7 @@ const Coupon = ({ getCoupons, coupons: { coupons, loading } }) => {
 
 Coupon.propTypes = {
     getCoupons: propTypes.func.isRequired,
+    deleteCoupon: propTypes.func.isRequired,
     coupons: propTypes.array.isRequired
 }
 
@@ -67,4 +76,4 @@ const mapStateToProps = (state) => ({
     coupons: state.coupon
 })
 
-export default connect(mapStateToProps, { getCoupons })(Coupon);
+export default connect(mapStateToProps, { getCoupons, deleteCoupon })(Coupon);

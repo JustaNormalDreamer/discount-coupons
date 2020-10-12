@@ -35,7 +35,6 @@ class CreateCoupon extends Component {
         }
 
         this.props.createCoupon(couponData, this.props.history);
-
     }
 
     changeHandler = e => {

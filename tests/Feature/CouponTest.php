@@ -171,6 +171,42 @@ class CouponTest extends TestCase
             ]);
     }
 
+    /**
+     * @test
+     */
+    public function test_it_is_able_to_delete_the_coupon()
+    {
+        $coupon = Coupon::factory()->create();
+
+        $this->deleteJson('/api/coupons/1')->assertStatus(204);
+
+        $this->assertDatabaseMissing('coupons', [
+            'id' => 1
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function test_it_is_able_delete_the_coupon_along_with_the_codes()
+    {
+        $coupon = Coupon::factory()->create();
+
+        $codes = Code::factory(2)->create([
+           'coupon_id' => $coupon->id
+        ]);
+
+        $this->deleteJson('/api/coupons/1')->assertStatus(204);
+
+        $this->assertDatabaseMissing('coupons', [
+            'id' => 1
+        ]);
+
+        $this->assertDatabaseMissing('codes', [
+            ['id' => 1], ['id' => 2]
+        ]);
+    }
+
     private function coupon_data()
     {
         return [

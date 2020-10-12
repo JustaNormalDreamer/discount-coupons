@@ -25,6 +25,10 @@ Route::post('coupons', 'CouponController@store')->name('coupons.store');
 
 Route::get('coupons/{coupon}', 'CouponController@show')->name('coupons.show');
 
+Route::delete('coupons/{coupon}', 'CouponController@destroy')->name('coupons.destroy');
+
 Route::get('users/{user}', 'UserController@index')->name('users.index');
 
 Route::post('users/{user}/{product}', 'ClaimCouponController@index')->name('coupon.claim');
+
+Route::apiResource('products', 'ProductController');

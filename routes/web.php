@@ -17,10 +17,7 @@ Route::get('/', function() {
    return view('index');
 });
 
-Route::get('/{any}', function() {
+//managing spa routes with regular expressions
+Route::get('/{any?}', function() {
     return view('index');
-});
-
-Route::get('/{any}/{any1}', function() {
-    return view('index');
-});
+})->where(['any' => '.*']);
