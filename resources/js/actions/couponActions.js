@@ -1,5 +1,6 @@
 import Axios from 'axios'
 import { GET_COUPONS, GET_COUPON, COUPON_LOADING } from "../types/couponsTypes";
+import { GET_ERRORS } from "../types/errorTypes";
 
 //get the coupons
 export const getCoupons = () => (dispatch) => {
@@ -10,7 +11,7 @@ export const getCoupons = () => (dispatch) => {
         }
     }).then(res => dispatch({
         type: GET_COUPONS,
-        payload: res.data
+        payload: res.data.data
     })).catch(err => dispatch({
         type: GET_ERRORS,
         payload: err.response.data
