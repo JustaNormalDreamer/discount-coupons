@@ -6394,6 +6394,68 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/classnames/index.js":
+/*!******************************************!*\
+  !*** ./node_modules/classnames/index.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+  Copyright (c) 2017 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var hasOwn = {}.hasOwnProperty;
+
+	function classNames () {
+		var classes = [];
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+
+			var argType = typeof arg;
+
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg) && arg.length) {
+				var inner = classNames.apply(null, arg);
+				if (inner) {
+					classes.push(inner);
+				}
+			} else if (argType === 'object') {
+				for (var key in arg) {
+					if (hasOwn.call(arg, key) && arg[key]) {
+						classes.push(key);
+					}
+				}
+			}
+		}
+
+		return classes.join(' ');
+	}
+
+	if ( true && module.exports) {
+		classNames.default = classNames;
+		module.exports = classNames;
+	} else if (true) {
+		// register as 'classnames', consistent with npm package name
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+			return classNames;
+		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else {}
+}());
+
+
+/***/ }),
+
 /***/ "./node_modules/history/esm/history.js":
 /*!*********************************************!*\
   !*** ./node_modules/history/esm/history.js ***!
@@ -72249,12 +72311,13 @@ module.exports = function(module) {
 /*!***********************************************!*\
   !*** ./resources/js/actions/couponActions.js ***!
   \***********************************************/
-/*! exports provided: getCoupons, setCouponLoading */
+/*! exports provided: getCoupons, createCoupon, setCouponLoading */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getCoupons", function() { return getCoupons; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createCoupon", function() { return createCoupon; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setCouponLoading", function() { return setCouponLoading; });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
@@ -72280,6 +72343,24 @@ var getCoupons = function getCoupons() {
       return dispatch({
         type: _types_errorTypes__WEBPACK_IMPORTED_MODULE_2__["GET_ERRORS"],
         payload: err.response.data
+      });
+    });
+  };
+}; //create a coupon
+
+var createCoupon = function createCoupon(couponData, history) {
+  return function (dispatch) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/coupons', couponData, {
+      headers: {
+        'Accept': 'application/json'
+      }
+    }).then(function (res) {
+      setCouponLoading();
+      history.push("/");
+    })["catch"](function (err) {
+      dispatch({
+        type: _types_errorTypes__WEBPACK_IMPORTED_MODULE_2__["GET_ERRORS"],
+        payload: err.response.data.errors
       });
     });
   };
@@ -72372,7 +72453,15 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Form_TextFieldGroup__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Form/TextFieldGroup */ "./resources/js/components/Form/TextFieldGroup.jsx");
+/* harmony import */ var _actions_couponActions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../actions/couponActions */ "./resources/js/actions/couponActions.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_5__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -72396,6 +72485,11 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
+
+
+
+
 var CreateCoupon = /*#__PURE__*/function (_Component) {
   _inherits(CreateCoupon, _Component);
 
@@ -72416,21 +72510,118 @@ var CreateCoupon = /*#__PURE__*/function (_Component) {
       expiry: '',
       greater: '',
       total_codes: '',
-      errors: []
+      errors: {}
+    }, _this.submitHandler = function (e) {
+      e.preventDefault();
+      var couponData = {
+        name: _this.state.name,
+        discount_rate: _this.state.discount,
+        expires_at: _this.state.expiry,
+        total_codes: _this.state.total_codes,
+        greater_than: _this.state.greater
+      };
+
+      _this.props.createCoupon(couponData, _this.props.history);
+    }, _this.changeHandler = function (e) {
+      _this.setState(_defineProperty({}, e.target.name, e.target.value));
     }, _temp));
   }
 
   _createClass(CreateCoupon, [{
+    key: "componentWillReceiveProps",
+    value: function componentWillReceiveProps(nextProps) {
+      if (nextProps.errors) {
+        this.setState({
+          errors: nextProps.errors
+        });
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Create Coupon");
+      var _this$state = this.state,
+          name = _this$state.name,
+          discount = _this$state.discount,
+          expiry = _this$state.expiry,
+          greater = _this$state.greater,
+          total_codes = _this$state.total_codes,
+          errors = _this$state.errors;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "container"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-header"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "Create Coupon")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-body"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        onSubmit: this.submitHandler
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Form_TextFieldGroup__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        label: "Coupon Name",
+        name: "name",
+        onChange: this.changeHandler,
+        placeholder: "Enter coupon name",
+        value: name,
+        error: errors.name
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Form_TextFieldGroup__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        label: "Coupon Discount Rate",
+        name: "discount",
+        type: "number",
+        onChange: this.changeHandler,
+        placeholder: "Enter coupon discount",
+        value: discount,
+        error: errors.discount_rate
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Form_TextFieldGroup__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        label: "Coupon Minimum Amount",
+        name: "greater",
+        type: "number",
+        onChange: this.changeHandler,
+        placeholder: "Enter coupon minimum amount",
+        value: greater,
+        error: errors.greater_than
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Form_TextFieldGroup__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        label: "Coupon Generate Codes",
+        name: "total_codes",
+        type: "number",
+        onChange: this.changeHandler,
+        placeholder: "Enter coupon total codes",
+        value: total_codes,
+        error: errors.total_codes
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Form_TextFieldGroup__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        label: "Coupon Expires At",
+        name: "expiry",
+        type: "datetime-local",
+        onChange: this.changeHandler,
+        placeholder: "Enter coupon expiry",
+        value: expiry,
+        error: errors.expires_at
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        type: "submit",
+        value: "Submit",
+        className: "btn btn-success form-control"
+      }))))));
     }
   }]);
 
   return CreateCoupon;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
-/* harmony default export */ __webpack_exports__["default"] = (CreateCoupon);
+CreateCoupon.propTypes = {
+  errors: prop_types__WEBPACK_IMPORTED_MODULE_5___default.a.object.isRequired,
+  createCoupon: prop_types__WEBPACK_IMPORTED_MODULE_5___default.a.func.isRequired
+};
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    errors: state.error
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["connect"])(mapStateToProps, {
+  createCoupon: _actions_couponActions__WEBPACK_IMPORTED_MODULE_2__["createCoupon"]
+})(Object(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["withRouter"])(CreateCoupon)));
 
 /***/ }),
 
@@ -72507,6 +72698,74 @@ var mapStateToProps = function mapStateToProps(state) {
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, {
   getCoupons: _actions_couponActions__WEBPACK_IMPORTED_MODULE_3__["getCoupons"]
 })(Coupon));
+
+/***/ }),
+
+/***/ "./resources/js/components/Form/TextFieldGroup.jsx":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/Form/TextFieldGroup.jsx ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+/* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+
+var TextFieldGroup = function TextFieldGroup(_ref) {
+  var name = _ref.name,
+      placeholder = _ref.placeholder,
+      value = _ref.value,
+      error = _ref.error,
+      info = _ref.info,
+      type = _ref.type,
+      onChange = _ref.onChange,
+      disabled = _ref.disabled,
+      label = _ref.label;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    htmlFor: name
+  }, label), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    name: name,
+    type: type,
+    placeholder: placeholder,
+    value: value,
+    onChange: onChange,
+    className: classnames__WEBPACK_IMPORTED_MODULE_1___default()("form-control form-control-lg", {
+      "is-invalid": error
+    }),
+    disabled: disabled
+  }), info && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", {
+    className: "form-text text-muted"
+  }, info), error && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "invalid-feedback"
+  }, error));
+};
+
+TextFieldGroup.propTypes = {
+  label: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string.isRequired,
+  name: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string.isRequired,
+  placeholder: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string,
+  value: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string.isRequired,
+  info: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string,
+  error: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string,
+  type: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string.isRequired,
+  onChange: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.func.isRequired,
+  disabled: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string
+};
+TextFieldGroup.defaultProps = {
+  type: "text"
+};
+/* harmony default export */ __webpack_exports__["default"] = (TextFieldGroup);
 
 /***/ }),
 
@@ -72696,7 +72955,7 @@ var initialState = {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
-  switch (action.payload) {
+  switch (action.type) {
     case _types_errorTypes__WEBPACK_IMPORTED_MODULE_0__["GET_ERRORS"]:
       return action.payload;
 

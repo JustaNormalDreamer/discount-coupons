@@ -18,6 +18,24 @@ export const getCoupons = () => (dispatch) => {
     }));
 }
 
+//create a coupon
+export const createCoupon = (couponData, history) => (dispatch) => {
+    Axios.post('/api/coupons',  couponData,{
+        headers: {
+            'Accept': 'application/json'
+        }
+    }).then(res => {
+        setCouponLoading();
+        history.push(`/`);
+    }).catch(err => {
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data.errors
+            })
+        }
+    )
+}
+
 export const setCouponLoading = () => {
     return {
         type: COUPON_LOADING,
