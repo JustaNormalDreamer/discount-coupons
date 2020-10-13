@@ -26,6 +26,7 @@ const Products = ({ getProducts, deleteProduct, products: { products, loading } 
                     <td>{product.name}</td>
                     <td>{product.rate}</td>
                     <td>{product.quantity}</td>
+                    <td><Link to={`/products/purchase/${product.id}`} className="btn btn-secondary">View</Link></td>
                     <td><Link to={`products/${product.id}/edit`} className="btn btn-info">Edit</Link></td>
                     <td><button className="btn btn-danger" onClick={() => deleteHandler(product.id)}>Delete</button></td>
                 </tr>
@@ -48,6 +49,7 @@ const Products = ({ getProducts, deleteProduct, products: { products, loading } 
                                 <th>Name</th>
                                 <th>Rate</th>
                                 <th>Quantity</th>
+                                <th>View</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
                             </tr>

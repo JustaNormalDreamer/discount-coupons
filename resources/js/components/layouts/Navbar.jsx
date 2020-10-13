@@ -28,6 +28,11 @@ const Navbar = () => {
                                 Create Product
                             </NavLink>
                         </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/auth/profile/1">
+                                Profile
+                            </NavLink>
+                        </li>
                     </ul>
                 </div>
             </div>

@@ -13,15 +13,17 @@ class UserController extends Controller
         $currentUser = User::findOrFail($user);
 
         return response()->json([
-           'data' => [
-               'code' => $currentUser->coupons->map(function($coupon) {
+           'data' =>  $currentUser->coupons->map(function($coupon) {
                    return [
                        'id' => $coupon->id,
-                       'product' => $coupon->products->name,
-                       'code' => $coupon->codes->code
+                       'product' => [
+                           'name' => $coupon->products->name,
+                           'rate' => $coupon->products->rate,
+                           'discount_amt' => ($coupon->codes->coupons->discount_rate * $coupon->products->rate) / 100,
+                       ],
+                       'code' => $coupon->codes->code,
                    ];
                })
-           ]
-        ]);
+            ]);
     }
 }

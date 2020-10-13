@@ -19,6 +19,6 @@ class Code extends Model
 
     public function coupons()
     {
-        return $this->belongsTo(Coupon::class);
+        return $this->belongsTo(Coupon::class, 'coupon_id');
     }
 }

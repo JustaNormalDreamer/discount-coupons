@@ -10,6 +10,8 @@ import CreateCoupon from "./components/Coupons/create";
 import Products from "./components/Products";
 import CreateProduct from "./components/Products/create";
 import EditProduct from "./components/Products/edit";
+import Profile from "./components/Auth/profile";
+import ProductPurchase from "./components/Purchases";
 
 const App = () => {
     return (
@@ -23,6 +25,9 @@ const App = () => {
                     <Route exact path="/products" component={Products} />
                     <Route exact path="/products/create" component={CreateProduct} />
                     <Route exact path="/products/:productId/edit" component={EditProduct} />
+                    <Route exact path="/products/purchase/:productId" component={ProductPurchase} />
+
+                    <Route exact path="/auth/profile/:userId" component={Profile} />
                     <Switch>
 
                     </Switch>

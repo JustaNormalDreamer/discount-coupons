@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class ClaimCouponController extends Controller
 {
-    public function index(CouponCodeRequest $request, $product, $user)
+    public function index(CouponCodeRequest $request, $user, $product)
     {
         // # initially a user, product id's are passed via a url get request
         // # then the user enters the voucher code in the input field using a post request
