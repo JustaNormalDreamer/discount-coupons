@@ -39,7 +39,7 @@ TextFieldGroup.propTypes = {
     placeholder: propTypes.string,
     value: propTypes.string.isRequired,
     info: propTypes.string,
-    error: propTypes.string,
+    error: propTypes.array,
     type: propTypes.string.isRequired,
     onChange: propTypes.func.isRequired,
     disabled: propTypes.string,

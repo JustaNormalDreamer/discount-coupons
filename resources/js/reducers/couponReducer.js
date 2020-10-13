@@ -1,8 +1,8 @@
 import { GET_COUPONS, GET_COUPON, COUPON_LOADING, DELETE_COUPON } from "../types/couponsTypes";
 
 const initialState = {
-    coupons: [],
-    coupon: {},
+    coupons: null,
+    coupon: null,
     loading: false,
 }
 

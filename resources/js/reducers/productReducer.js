@@ -1,8 +1,8 @@
-import { GET_PRODUCTS, DELETE_PRODUCT, PRODUCT_LOADING } from "../types/productTypes";
+import {GET_PRODUCTS, DELETE_PRODUCT, PRODUCT_LOADING, GET_PRODUCT} from "../types/productTypes";
 
 const initialState = {
-    products: [],
-    product: {},
+    products: null,
+    product: null,
     loading: false
 }
 
@@ -12,6 +12,13 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 products: action.payload,
+                loading: false
+            }
+
+        case GET_PRODUCT:
+            return {
+                ...state,
+                product: action.payload,
                 loading: false
             }
 

@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux'
-import { getProducts } from "../../actions/productActions";
+import { Link } from 'react-router-dom'
+import { getProducts, deleteProduct } from "../../actions/productActions";
 import propTypes from 'prop-types';
 import Spinner from "../Spinner";
 
-const Products = ({ getProducts, products: { products, loading } }) => {
+const Products = ({ getProducts, deleteProduct, products: { products, loading } }) => {
 
     useEffect(() => {
         getProducts();
     }, [getProducts])
 
     const deleteHandler = productId => {
-        console.log(productId);
+        deleteProduct(productId);
     }
 
     let productItems;
@@ -25,6 +26,7 @@ const Products = ({ getProducts, products: { products, loading } }) => {
                     <td>{product.name}</td>
                     <td>{product.rate}</td>
                     <td>{product.quantity}</td>
+                    <td><Link to={`products/${product.id}/edit`} className="btn btn-info">Edit</Link></td>
                     <td><button className="btn btn-danger" onClick={() => deleteHandler(product.id)}>Delete</button></td>
                 </tr>
             ))
@@ -46,6 +48,7 @@ const Products = ({ getProducts, products: { products, loading } }) => {
                                 <th>Name</th>
                                 <th>Rate</th>
                                 <th>Quantity</th>
+                                <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
                             </thead>
@@ -62,6 +65,7 @@ const Products = ({ getProducts, products: { products, loading } }) => {
 
 Products.propTypes = {
     getProducts: propTypes.func.isRequired,
+    deleteProduct: propTypes.func.isRequired,
     products: propTypes.array.isRequired
 }
 
@@ -69,4 +73,4 @@ const mapStateToProps = state => ({
     products: state.product
 })
 
-export default connect(mapStateToProps, { getProducts })(Products);
+export default connect(mapStateToProps, { getProducts, deleteProduct })(Products);

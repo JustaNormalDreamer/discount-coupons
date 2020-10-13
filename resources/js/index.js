@@ -9,7 +9,7 @@ import Coupon from "./components/Coupons";
 import CreateCoupon from "./components/Coupons/create";
 import Products from "./components/Products";
 import CreateProduct from "./components/Products/create";
-
+import EditProduct from "./components/Products/edit";
 
 const App = () => {
     return (
@@ -22,6 +22,7 @@ const App = () => {
 
                     <Route exact path="/products" component={Products} />
                     <Route exact path="/products/create" component={CreateProduct} />
+                    <Route exact path="/products/:productId/edit" component={EditProduct} />
                     <Switch>
 
                     </Switch>
