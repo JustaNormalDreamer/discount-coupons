@@ -112,8 +112,10 @@ class CouponClaimTest extends TestCase
 
         $this->postJson("/api/users/{$user->id}/{$product->id}", [
             'voucher_code' => 'abcde12345'
-        ])->assertStatus(419)->assertJson([
-            "data" => "The coupon has expired."
+        ])->assertStatus(422)->assertJson([
+                'errors' => [
+                    'voucher_code' => ["The voucher code has expired."]
+                ]
         ]);
 
         $this->assertDatabaseMissing('coupon_product_user', [
@@ -149,8 +151,10 @@ class CouponClaimTest extends TestCase
 
         $this->postJson("/api/users/{$user->id}/{$product->id}", [
             'voucher_code' => 'abcde12345'
-        ])->assertStatus(409)->assertJson([
-            "data" => "The coupon has been claimed."
+        ])->assertStatus(422)->assertJson([
+            'errors' => [
+                'voucher_code' => ["The voucher code has been claimed."]
+            ]
         ]);
 
         $this->assertDatabaseMissing('coupon_product_user', [
@@ -185,8 +189,10 @@ class CouponClaimTest extends TestCase
 
         $this->postJson("/api/users/{$user->id}/{$product->id}", [
             'voucher_code' => 'abcde12345'
-        ])->assertStatus(406)->assertJson([
-            "data" => "The coupon should be applied to products greater than 2000."
+        ])->assertStatus(422)->assertJson([
+            'errors' => [
+                'voucher_code' => ["The voucher code can only be applied to products having greater rate."]
+            ]
         ]);
 
         $this->assertDatabaseMissing('coupon_product_user', [

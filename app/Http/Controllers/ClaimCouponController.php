@@ -27,54 +27,32 @@ class ClaimCouponController extends Controller
             //find the product
             $chose_product = Product::findOrFail($product);
 
-            if($code->status === false) {
-                if($coupon->is_expired()) {
-                    if ($coupon->is_greater_than($chose_product->rate)) {
-                        //creating the user claimed instance in the database
-                        CouponProductUser::create([
-                            'user_id' => $user,
-                            'product_id' => $product,
-                            'code_id' => $code->id,
-                        ]);
+            //creating the user claimed instance in the database
+            CouponProductUser::create([
+                'user_id' => $user,
+                'product_id' => $product,
+                'code_id' => $code->id,
+            ]);
 
-                        //changing the code status and updating the coupon status
-                        $code->update([
-                            'status' => true //here true means it is claimed
-                        ]);
+            //changing the code status and updating the coupon status
+            $code->update([
+                'status' => true //here true means it is claimed
+            ]);
 
-                        $coupon->update([
-                            'used_codes' => $coupon->used_codes + 1
-                        ]);
+            $coupon->update([
+                'used_codes' => $coupon->used_codes + 1
+            ]);
 
-                        //calculating the amount
-                        $discountAmt = ($chose_product->rate * $coupon->discount_rate)/100;
-                        $newAmt = $chose_product->rate - $discountAmt;
+            //calculating the amount
+            $discountAmt = ($chose_product->rate * $coupon->discount_rate)/100;
+            $newAmt = $chose_product->rate - $discountAmt;
 
-                        return [
-                            'message' => "The coupon has been claimed successfully.",
-                            'discount_amount' => $discountAmt,
-                            'new_amount' => $newAmt,
-                            'status' => 200
-                        ];
-                    }
-                    else {
-                        return [
-                            'message' => "The coupon should be applied to products greater than {$coupon->greater_than}.",
-                            'status' => 406
-                        ];
-                    }
-                } else {
-                    return [
-                        'message' => "The coupon has expired.",
-                        'status' => 419
-                    ];
-                }
-            } else {
-                return [
-                    'message' => "The coupon has been claimed.",
-                    'status' => 409
-                ];
-            }
+            return [
+                'message' => "The coupon has been claimed successfully.",
+                'discount_amount' => $discountAmt,
+                'new_amount' => $newAmt,
+                'status' => 200
+            ];
         });
 
         return response()->json([
