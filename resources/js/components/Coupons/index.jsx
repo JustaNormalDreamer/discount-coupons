@@ -69,7 +69,7 @@ const Coupon = ({ getCoupons, deleteCoupon, coupons: { coupons, loading } }) => 
 Coupon.propTypes = {
     getCoupons: propTypes.func.isRequired,
     deleteCoupon: propTypes.func.isRequired,
-    coupons: propTypes.array.isRequired
+    coupons: propTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({

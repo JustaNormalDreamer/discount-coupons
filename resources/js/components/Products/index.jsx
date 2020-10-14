@@ -68,7 +68,7 @@ const Products = ({ getProducts, deleteProduct, products: { products, loading } 
 Products.propTypes = {
     getProducts: propTypes.func.isRequired,
     deleteProduct: propTypes.func.isRequired,
-    products: propTypes.array.isRequired
+    products: propTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({

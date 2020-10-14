@@ -72992,7 +72992,7 @@ var Coupon = function Coupon(_ref) {
 Coupon.propTypes = {
   getCoupons: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.func.isRequired,
   deleteCoupon: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.func.isRequired,
-  coupons: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.array.isRequired
+  coupons: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.object.isRequired
 };
 
 var mapStateToProps = function mapStateToProps(state) {
@@ -73502,7 +73502,7 @@ var Products = function Products(_ref) {
 Products.propTypes = {
   getProducts: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.func.isRequired,
   deleteProduct: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.func.isRequired,
-  products: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.array.isRequired
+  products: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.object.isRequired
 };
 
 var mapStateToProps = function mapStateToProps(state) {
@@ -73908,9 +73908,7 @@ var initialState = {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _types_errorTypes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../types/errorTypes */ "./resources/js/types/errorTypes.js");
 
-var initialState = {
-  errors: []
-};
+var initialState = {};
 /* harmony default export */ __webpack_exports__["default"] = (function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
   var action = arguments.length > 1 ? arguments[1] : undefined;

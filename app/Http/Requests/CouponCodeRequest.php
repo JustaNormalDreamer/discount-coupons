@@ -2,6 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\CodeClaimedRule;
+use App\Rules\CodeExpiredRule;
+use App\Rules\CouponAmountRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CouponCodeRequest extends FormRequest
@@ -24,7 +27,7 @@ class CouponCodeRequest extends FormRequest
     public function rules()
     {
         return [
-            'voucher_code' => 'required|string|exists:codes,code'
+            'voucher_code' => ['bail', 'required' , 'string', 'exists:codes,code', new CodeClaimedRule, new CodeExpiredRule, new CouponAmountRule(request()->product)]
         ];
     }
 }
