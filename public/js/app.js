@@ -72347,18 +72347,18 @@ var getProfile = function getProfile() {
   };
 }; //product purchase actions using coupons
 
-var useCoupon = function useCoupon(userId, productId, couponData) {
+var useCoupon = function useCoupon(userId, productId, couponData, history) {
   return function (dispatch) {
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/api/users/".concat(userId, "/").concat(productId), couponData, {
       headers: {
         'Accept': 'application/json'
       }
     }).then(function (res) {
-      console.log('Coupon claimed!', res);
+      history.push('/products');
     })["catch"](function (err) {
       return dispatch({
         type: _types_errorTypes__WEBPACK_IMPORTED_MODULE_2__["GET_ERRORS"],
-        payload: err.response.data
+        payload: err.response.data.errors
       });
     });
   };
@@ -73530,11 +73530,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _actions_productActions__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../actions/productActions */ "./resources/js/actions/productActions.js");
-/* harmony import */ var _actions_authActions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/authActions */ "./resources/js/actions/authActions.js");
-/* harmony import */ var _Form_TextFieldGroup__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Form/TextFieldGroup */ "./resources/js/components/Form/TextFieldGroup.jsx");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _actions_productActions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/productActions */ "./resources/js/actions/productActions.js");
+/* harmony import */ var _actions_authActions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../actions/authActions */ "./resources/js/actions/authActions.js");
+/* harmony import */ var _Form_TextFieldGroup__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Form/TextFieldGroup */ "./resources/js/components/Form/TextFieldGroup.jsx");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -73554,10 +73555,13 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
 var ProductPurchase = function ProductPurchase(_ref) {
   var getProduct = _ref.getProduct,
       useCoupon = _ref.useCoupon,
-      match = _ref.match;
+      match = _ref.match,
+      history = _ref.history,
+      errors = _ref.errors;
 
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(""),
       _useState2 = _slicedToArray(_useState, 2),
@@ -73571,14 +73575,15 @@ var ProductPurchase = function ProductPurchase(_ref) {
 
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     getProduct(match.params.productId);
-  }, [getProduct]);
+    setError(errors);
+  }, [getProduct, errors]);
 
   var submitHandler = function submitHandler(e) {
     e.preventDefault();
     var userId = 1;
     useCoupon(userId, match.params.productId, {
       voucher_code: code
-    });
+    }, history);
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -73591,7 +73596,7 @@ var ProductPurchase = function ProductPurchase(_ref) {
     className: "card-body"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
     onSubmit: submitHandler
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Form_TextFieldGroup__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_Form_TextFieldGroup__WEBPACK_IMPORTED_MODULE_6__["default"], {
     label: "Enter Coupon Code",
     placeholder: "abcde12345",
     onChange: function onChange(e) {
@@ -73599,7 +73604,7 @@ var ProductPurchase = function ProductPurchase(_ref) {
     },
     value: code,
     name: "coupon_code",
-    error: error.coupon_code
+    error: error.voucher_code
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "form-group"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
@@ -73610,21 +73615,23 @@ var ProductPurchase = function ProductPurchase(_ref) {
 };
 
 ProductPurchase.propTypes = {
-  product: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.object.isRequired,
-  getProduct: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.func.isRequired,
-  useCoupon: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.func.isRequired
+  product: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.object.isRequired,
+  errors: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.object.isRequired,
+  getProduct: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.func.isRequired,
+  useCoupon: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.func.isRequired
 };
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    product: state.product
+    product: state.product,
+    errors: state.error
   };
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, {
-  getProduct: _actions_productActions__WEBPACK_IMPORTED_MODULE_3__["getProduct"],
-  useCoupon: _actions_authActions__WEBPACK_IMPORTED_MODULE_4__["useCoupon"]
-})(ProductPurchase));
+  getProduct: _actions_productActions__WEBPACK_IMPORTED_MODULE_4__["getProduct"],
+  useCoupon: _actions_authActions__WEBPACK_IMPORTED_MODULE_5__["useCoupon"]
+})(Object(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(ProductPurchase)));
 
 /***/ }),
 

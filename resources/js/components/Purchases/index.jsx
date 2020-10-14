@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import propTypes from 'prop-types'
 import { getProduct } from "../../actions/productActions";
 import { useCoupon } from "../../actions/authActions";
 import TextFieldGroup from "../Form/TextFieldGroup";
 
-const ProductPurchase = ({ getProduct, useCoupon, match }) => {
+const ProductPurchase = ({ getProduct, useCoupon, match, history, errors }) => {
     const [code, setCode] = useState("");
     const [error, setError] = useState([]);
 
     useEffect(() => {
         getProduct(match.params.productId);
-    }, [getProduct]);
+        setError(errors);
+    }, [getProduct, errors]);
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -20,7 +22,7 @@ const ProductPurchase = ({ getProduct, useCoupon, match }) => {
 
         useCoupon(userId, match.params.productId, {
             voucher_code: code
-        });
+        }, history);
     }
 
     return (
@@ -37,7 +39,7 @@ const ProductPurchase = ({ getProduct, useCoupon, match }) => {
                             onChange={(e) => setCode(e.target.value)}
                             value={code}
                             name="coupon_code"
-                            error={error.coupon_code}
+                            error={error.voucher_code}
                             />
 
                         <div className="form-group">
@@ -52,12 +54,14 @@ const ProductPurchase = ({ getProduct, useCoupon, match }) => {
 
 ProductPurchase.propTypes = {
     product: propTypes.object.isRequired,
+    errors: propTypes.object.isRequired,
     getProduct: propTypes.func.isRequired,
     useCoupon: propTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
-    product: state.product
+    product: state.product,
+    errors: state.error
 })
 
-export default connect(mapStateToProps, { getProduct, useCoupon })(ProductPurchase);
+export default connect(mapStateToProps, { getProduct, useCoupon })(withRouter(ProductPurchase));

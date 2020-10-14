@@ -18,16 +18,16 @@ export const getProfile = () => (dispatch) => {
 }
 
 //product purchase actions using coupons
-export const useCoupon = (userId, productId, couponData) => (dispatch) => {
+export const useCoupon = (userId, productId, couponData, history) => (dispatch) => {
     Axios.post(`/api/users/${userId}/${productId}`, couponData, {
         headers: {
             'Accept': 'application/json'
         }
     }).then(res => {
-        console.log('Coupon claimed!', res)
+        history.push('/products');
     }).catch(err => dispatch({
         type: GET_ERRORS,
-        payload: err.response.data
+        payload: err.response.data.errors
     }))
 }
 
