@@ -25,6 +25,8 @@ export default function(state = initialState, action) {
         case PRODUCT_LOADING:
             return {
                 loading: true,
+                products: null,
+                product: null,
             }
 
         case DELETE_PRODUCT:

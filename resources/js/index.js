@@ -19,17 +19,16 @@ const App = () => {
             <Router>
                 <div className="App">
                     <Navbar />
-                    <Route exact path="/" component={Coupon} />
-                    <Route exact path="/coupons/create" component={CreateCoupon} />
-
-                    <Route exact path="/products" component={Products} />
-                    <Route exact path="/products/create" component={CreateProduct} />
-                    <Route exact path="/products/:productId/edit" component={EditProduct} />
-                    <Route exact path="/products/purchase/:productId" component={ProductPurchase} />
-
-                    <Route exact path="/auth/profile/:userId" component={Profile} />
                     <Switch>
+                        <Route exact path="/" component={Coupon} />
+                        <Route exact path="/coupons/create" component={CreateCoupon} />
 
+                        <Route exact path="/products" component={Products} />
+                        <Route exact path="/products/create" component={CreateProduct} />
+                        <Route exact path="/products/:productId/edit" component={EditProduct} />
+                        <Route exact path="/products/purchase/:productId" component={ProductPurchase} />
+
+                        <Route exact path="/auth/profile/:userId" component={Profile} />
                     </Switch>
                 </div>
             </Router>
@@ -40,5 +39,9 @@ const App = () => {
 export default App;
 
 if(document.getElementById('app')) {
-    render(<App />, document.getElementById('app'));
+    render(
+        <React.StrictMode>
+            <App />
+        </React.StrictMode>, document.getElementById('app')
+    );
 }

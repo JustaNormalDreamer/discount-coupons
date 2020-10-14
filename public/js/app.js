@@ -73763,7 +73763,7 @@ var App = function App() {
     store: _store__WEBPACK_IMPORTED_MODULE_3__["default"]
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["BrowserRouter"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "App"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_layouts_Navbar__WEBPACK_IMPORTED_MODULE_5__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Route"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_layouts_Navbar__WEBPACK_IMPORTED_MODULE_5__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Route"], {
     exact: true,
     path: "/",
     component: _components_Coupons__WEBPACK_IMPORTED_MODULE_6__["default"]
@@ -73791,13 +73791,13 @@ var App = function App() {
     exact: true,
     path: "/auth/profile/:userId",
     component: _components_Auth_profile__WEBPACK_IMPORTED_MODULE_11__["default"]
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_4__["Switch"], null))));
+  })))));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (App);
 
 if (document.getElementById('app')) {
-  Object(react_dom__WEBPACK_IMPORTED_MODULE_1__["render"])( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(App, null), document.getElementById('app'));
+  Object(react_dom__WEBPACK_IMPORTED_MODULE_1__["render"])( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.StrictMode, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(App, null)), document.getElementById('app'));
 }
 
 /***/ }),
@@ -73887,7 +73887,9 @@ var initialState = {
 
     case _types_couponsTypes__WEBPACK_IMPORTED_MODULE_0__["COUPON_LOADING"]:
       return _objectSpread(_objectSpread({}, state), {}, {
-        loading: true
+        loading: true,
+        coupons: null,
+        coupon: null
       });
 
     case _types_couponsTypes__WEBPACK_IMPORTED_MODULE_0__["DELETE_COUPON"]:
@@ -74000,7 +74002,9 @@ var initialState = {
 
     case _types_productTypes__WEBPACK_IMPORTED_MODULE_0__["PRODUCT_LOADING"]:
       return {
-        loading: true
+        loading: true,
+        products: null,
+        product: null
       };
 
     case _types_productTypes__WEBPACK_IMPORTED_MODULE_0__["DELETE_PRODUCT"]:

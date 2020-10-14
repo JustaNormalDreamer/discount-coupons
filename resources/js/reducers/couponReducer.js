@@ -26,6 +26,8 @@ export default function(state=initialState, action) {
             return {
                 ...state,
                 loading: true,
+                coupons: null,
+                coupon: null,
             }
 
         case DELETE_COUPON:
