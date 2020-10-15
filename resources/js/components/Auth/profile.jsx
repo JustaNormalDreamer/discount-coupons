@@ -7,6 +7,7 @@ import Spinner from '../Spinner';
 const Profile = ({ getProfile, auth: { user, loading } }) => {
 
     useEffect(() => {
+        document.title = "Manage Profile"
         getProfile();
     }, [getProfile])
 

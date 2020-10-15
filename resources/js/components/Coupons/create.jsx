@@ -15,6 +15,10 @@ class CreateCoupon extends Component {
         errors: {},
     }
 
+    componentDidMount() {
+        document.title = "Create Coupon";
+    }
+
     componentWillReceiveProps(nextProps) {
         if(nextProps.errors) {
             this.setState({
@@ -49,7 +53,7 @@ class CreateCoupon extends Component {
             <div className="container">
                 <div className="card">
                     <div className="card-header">
-                        <h2>Create Coupon</h2>
+                        <h3>Create Coupon</h3>
                     </div>
                     <div className="card-body">
                         <form onSubmit={this.submitHandler}>
@@ -57,50 +61,63 @@ class CreateCoupon extends Component {
                                 label="Coupon Name"
                                 name="name"
                                 onChange={this.changeHandler}
-                                placeholder="Enter coupon name"
+                                placeholder="Halloween Sale"
                                 value={name}
                                 error={errors.name}
                             />
 
-                            <TextFieldGroup
-                                label="Coupon Discount Rate"
-                                name="discount"
-                                type="number"
-                                onChange={this.changeHandler}
-                                placeholder="Enter coupon discount"
-                                value={discount}
-                                error={errors.discount_rate}
-                            />
+                            <div className="form-row">
+                                <div className="col-md-6">
+                                    <TextFieldGroup
+                                        label="Coupon Discount Rate"
+                                        name="discount"
+                                        type="number"
+                                        onChange={this.changeHandler}
+                                        placeholder="20"
+                                        value={discount}
+                                        error={errors.discount_rate}
+                                    />
+                                </div>
 
-                            <TextFieldGroup
-                                label="Coupon Minimum Amount"
-                                name="greater"
-                                type="number"
-                                onChange={this.changeHandler}
-                                placeholder="Enter coupon minimum amount"
-                                value={greater}
-                                error={errors.greater_than}
-                            />
+                                <div className="col-md-6">
+                                    <TextFieldGroup
+                                        label="Coupon Minimum Amount"
+                                        name="greater"
+                                        type="number"
+                                        onChange={this.changeHandler}
+                                        placeholder="2000.00"
+                                        value={greater}
+                                        error={errors.greater_than}
+                                    />
+                                </div>
+                            </div>
 
-                            <TextFieldGroup
-                                label="Coupon Generate Codes"
-                                name="total_codes"
-                                type="number"
-                                onChange={this.changeHandler}
-                                placeholder="Enter coupon total codes"
-                                value={total_codes}
-                                error={errors.total_codes}
-                            />
 
-                            <TextFieldGroup
-                                label="Coupon Expires At"
-                                name="expiry"
-                                type="datetime-local"
-                                onChange={this.changeHandler}
-                                placeholder="Enter coupon expiry"
-                                value={expiry}
-                                error={errors.expires_at}
-                            />
+                            <div className="form-row">
+                                <div className="col-md-6">
+                                    <TextFieldGroup
+                                        label="Coupon Generate Codes"
+                                        name="total_codes"
+                                        type="number"
+                                        onChange={this.changeHandler}
+                                        placeholder="5"
+                                        value={total_codes}
+                                        error={errors.total_codes}
+                                    />
+                                </div>
+
+                                <div className="col-md-6">
+                                    <TextFieldGroup
+                                        label="Coupon Expires At"
+                                        name="expiry"
+                                        type="datetime-local"
+                                        onChange={this.changeHandler}
+                                        placeholder="Enter coupon expiry"
+                                        value={expiry}
+                                        error={errors.expires_at}
+                                    />
+                                </div>
+                            </div>
 
                             <div className="form-group">
                                 <input type="submit" value="Submit" className="btn btn-success form-control" />

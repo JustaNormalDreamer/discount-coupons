@@ -1,6 +1,7 @@
 import Axios from 'axios'
 import { GET_PROFILE, PROFILE_LOADING } from "../types/authTypes";
 import { GET_ERRORS } from "../types/errorTypes";
+import { COUPON_USED } from "../types/purchaseTypes";
 
 //get user profile
 export const getProfile = () => (dispatch) => {
@@ -24,7 +25,11 @@ export const useCoupon = (userId, productId, couponData, history) => (dispatch) 
             'Accept': 'application/json'
         }
     }).then(res => {
-        history.push('/products');
+        dispatch({
+            type: COUPON_USED,
+            payload: res.data.data
+        });
+        // history.push('/products');
     }).catch(err => dispatch({
         type: GET_ERRORS,
         payload: err.response.data.errors

@@ -39,7 +39,9 @@ class CouponClaimTest extends TestCase
         $this->postJson("/api/users/{$user->id}/{$product->id}", [
             'voucher_code' => 'abcde12345'
         ])->assertStatus(200)->assertJson([
-            "data" => "The coupon has been claimed successfully."
+            "data" => [
+                "message" => "The coupon has been claimed successfully."
+            ]
         ]);
 
         $this->assertDatabaseHas('coupon_product_user', [
@@ -73,7 +75,9 @@ class CouponClaimTest extends TestCase
         $this->postJson("/api/users/{$user->id}/{$product->id}", [
             'voucher_code' => 'abcde12345'
         ])->assertStatus(200)->assertJson([
-            "data" => "The coupon has been claimed successfully."
+            "data" => [
+                "message" => "The coupon has been claimed successfully."
+            ]
         ]);
 
         $this->assertDatabaseHas('coupon_product_user', [

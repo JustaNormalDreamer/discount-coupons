@@ -7,6 +7,7 @@ import Spinner from '../Spinner';
 
 const Coupon = ({ getCoupons, deleteCoupon, coupons: { coupons, loading } }) => {
     useEffect(() => {
+        document.title = "Manage Coupons";
         getCoupons();
     }, [getCoupons]);
 
@@ -19,9 +20,9 @@ const Coupon = ({ getCoupons, deleteCoupon, coupons: { coupons, loading } }) => 
         couponItems = <Spinner />;
     } else {
         if(coupons.length > 0) {
-            couponItems = coupons.map(coupon => (
+            couponItems = coupons.map((coupon, index) => (
                 <tr key={coupon.id}>
-                    <td>{coupon.id}</td>
+                    <td>{++index}</td>
                     <td>{coupon.name}</td>
                     <td>{coupon.discount_rate}</td>
                     <td>{coupon.greater_than}</td>

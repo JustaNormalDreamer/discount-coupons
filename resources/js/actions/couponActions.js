@@ -1,6 +1,6 @@
 import Axios from 'axios'
 import {GET_COUPONS, GET_COUPON, COUPON_LOADING, DELETE_COUPON} from "../types/couponsTypes";
-import { GET_ERRORS } from "../types/errorTypes";
+import {CLEAR_ERRORS, GET_ERRORS} from "../types/errorTypes";
 
 //get the coupons
 export const getCoupons = () => (dispatch) => {
@@ -20,6 +20,7 @@ export const getCoupons = () => (dispatch) => {
 
 //create a coupon
 export const createCoupon = (couponData, history) => (dispatch) => {
+    dispatch(clearErrors());
     Axios.post('/api/coupons',  couponData,{
         headers: {
             'Accept': 'application/json'
@@ -59,5 +60,12 @@ export const deleteCoupon = (couponId) => (dispatch) => {
 export const setCouponLoading = () => {
     return {
         type: COUPON_LOADING,
+    }
+}
+
+//clear all errors
+export const clearErrors = () => {
+    return {
+        type: CLEAR_ERRORS
     }
 }

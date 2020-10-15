@@ -1,6 +1,6 @@
 import Axios from 'axios';
 import { GET_PRODUCTS, GET_PRODUCT, DELETE_PRODUCT, PRODUCT_LOADING } from "../types/productTypes";
-import { GET_ERRORS } from "../types/errorTypes";
+import { GET_ERRORS, CLEAR_ERRORS } from "../types/errorTypes";
 
 //get products
 export const getProducts = () => (dispatch) => {
@@ -20,6 +20,7 @@ export const getProducts = () => (dispatch) => {
 
 //create product
 export const createProduct = (productData, history) => (dispatch) => {
+    dispatch(clearErrors());
     Axios.post('/api/products', productData,{
         headers: {
             'Accept': 'application/json'
@@ -51,6 +52,7 @@ export const getProduct = (productId) => (dispatch) => {
 //update a product
 export const updateProduct = (productId, productData, history) => (dispatch) => {
     dispatch(productLoading());
+    dispatch(clearErrors());
     Axios.put(`/api/products/${productId}`, productData, {
         headers: {
             'Accept': 'application/json'
@@ -84,5 +86,12 @@ export const deleteProduct = (productId) => (dispatch) => {
 export const productLoading = () => {
     return {
         type: PRODUCT_LOADING,
+    }
+}
+
+//clear all errors
+export const clearErrors = () => {
+    return {
+        type: CLEAR_ERRORS
     }
 }

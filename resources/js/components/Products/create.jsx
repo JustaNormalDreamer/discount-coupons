@@ -13,6 +13,10 @@ class CreateProduct extends Component {
         errors: {}
     }
 
+    componentDidMount() {
+        document.title = "Create Product";
+    }
+
     componentWillReceiveProps(nextProps) {
         if(nextProps.errors) {
             this.setState({
@@ -49,30 +53,36 @@ class CreateProduct extends Component {
                                 label="Product Name"
                                 name="name"
                                 onChange={this.changeHandler}
-                                placeholder="Enter product name"
+                                placeholder="Fantech HG-11 Captain gaming headphone"
                                 value={name}
                                 error={errors.name}
                             />
 
-                            <TextFieldGroup
-                                label="Product quantity"
-                                name="quantity"
-                                type="number"
-                                onChange={this.changeHandler}
-                                placeholder="Enter product quantity"
-                                value={quantity}
-                                error={errors.quantity}
-                            />
+                            <div className="form-row">
+                                <div className="col-md-6">
+                                    <TextFieldGroup
+                                        label="Product quantity"
+                                        name="quantity"
+                                        type="number"
+                                        onChange={this.changeHandler}
+                                        placeholder="15"
+                                        value={quantity}
+                                        error={errors.quantity}
+                                    />
+                                </div>
 
-                            <TextFieldGroup
-                                label="Product Rate"
-                                name="rate"
-                                type="number"
-                                onChange={this.changeHandler}
-                                placeholder="Enter product rate"
-                                value={rate}
-                                error={errors.rate}
-                            />
+                                <div className="col-md-6">
+                                    <TextFieldGroup
+                                        label="Product Rate"
+                                        name="rate"
+                                        type="number"
+                                        onChange={this.changeHandler}
+                                        placeholder="1500.00"
+                                        value={rate}
+                                        error={errors.rate}
+                                    />
+                                </div>
+                            </div>
 
                             <div className="form-group">
                                 <input type="submit" value="Submit" className="btn btn-success form-control" />

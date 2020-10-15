@@ -8,6 +8,7 @@ import Spinner from "../Spinner";
 const Products = ({ getProducts, deleteProduct, products: { products, loading } }) => {
 
     useEffect(() => {
+        document.title = "Manage Products";
         getProducts();
     }, [getProducts])
 
@@ -20,9 +21,9 @@ const Products = ({ getProducts, deleteProduct, products: { products, loading } 
         productItems = <Spinner />
     } else {
         if(products.length > 0) {
-            productItems = products.map(product => (
+            productItems = products.map((product, index) => (
                 <tr key={product.id}>
-                    <td>{product.id}</td>
+                    <td>{++index}</td>
                     <td>{product.name}</td>
                     <td>{product.rate}</td>
                     <td>{product.quantity}</td>

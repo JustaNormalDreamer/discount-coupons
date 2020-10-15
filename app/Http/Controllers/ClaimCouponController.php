@@ -56,9 +56,11 @@ class ClaimCouponController extends Controller
         });
 
         return response()->json([
-            'data' => $message['message'],
-            'discount_amount' => array_key_exists('discount_amount', $message) ? $message['discount_amount'] : '',
-            'new_amount' => array_key_exists('new_amount', $message) ? $message['new_amount'] : '0',
+            'data' => [
+                'message' => $message['message'],
+                'discount_amount' => array_key_exists('discount_amount', $message) ? $message['discount_amount'] : '',
+                'new_amount' => array_key_exists('new_amount', $message) ? $message['new_amount'] : '0',
+            ]
         ], $message['status']);
     }
 }
